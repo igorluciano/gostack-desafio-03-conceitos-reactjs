@@ -29,7 +29,14 @@ function App() {
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    api.delete(`/repositories/${id}`).then((response) => {
+      if (response.status === 204) {
+        const repositoriesAfterDelete = repositories.filter(
+          (repository) => repository.id !== id
+        );
+        setRepositories(repositoriesAfterDelete);
+      }
+    });
   }
 
   return (
