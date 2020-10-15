@@ -15,7 +15,17 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    // TODO
+    const numberRepository = Date.now();
+    const newRepository = {
+      title: `Repositório #${numberRepository}`,
+      url: `http://github.com/igorluciano/gostack-repositorio-${numberRepository}`,
+      techs: ["ReactJS", "NodeJS"],
+    };
+
+    api.post("/repositories", newRepository).then((response) => {
+      const repository = response.data;
+      setRepositories([...repositories, repository]);
+    });
   }
 
   async function handleRemoveRepository(id) {
