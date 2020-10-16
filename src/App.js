@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { validate as uuidValidate } from "uuid";
 import api from "./services/api";
 
 import "./styles.css";
@@ -22,8 +23,14 @@ function App() {
       techs: ["ReactJS", "NodeJS"],
     };
 
-    api.post("/repositories", newRepository).then((response) => {
+    await api.post("/repositories", newRepository).then((response) => {
       const repository = response.data;
+
+      if (!uuidValidate(repository.id)) {
+        alert("Não foi possível adicionar um novo repositório.");
+        return;
+      }
+
       setRepositories([...repositories, repository]);
     });
   }
